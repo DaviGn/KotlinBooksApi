@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mercadolivro
+    username: postgres
+    password: 123456
+  jackson:
+    default-property-inclusion: non_null
