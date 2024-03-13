@@ -1,8 +1,7 @@
 package com.mercadolivro.domain.entities
 
-import com.mercadolivro.domain.exceptions.BadRequestException
 import java.math.BigDecimal
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity(name = "Books")
 data class BookModel(

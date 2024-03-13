@@ -4,12 +4,12 @@ import com.mercadolivro.application.useCases.books.*
 import com.mercadolivro.domain.requests.CreateBookRequest
 import com.mercadolivro.domain.requests.UpdateBookRequest
 import com.mercadolivro.domain.responses.BookResponse
+import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RestController
 @RequestMapping("books")
@@ -26,7 +26,7 @@ class BookController(
         return listBooksUseCaseHandler.handle(useCase);
     }
 
-    @GetMapping("/{id")
+    @GetMapping("/{id}")
     fun get(@PathVariable id: Int): BookResponse {
         val useCase = GetBookUseCase(id);
         return getBookUseCaseHandler.handle(useCase);
