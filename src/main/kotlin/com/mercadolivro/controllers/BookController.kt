@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("books")
 class BookController(
-        private val listBooksUseCaseHandler: ListBooksUseCaseHandler,
-        private val getBookUseCaseHandler: GetBookUseCaseHandler,
-        private val createBookHandlerHandler: CreateBookUseCaseHandler,
-        private val updateBookUseCaseHandler: UpdateBookUseCaseHandler,
-        private val deleteBookUseCaseHandler: DeleteBookUseCaseHandler
+    private val listBooksUseCaseHandler: ListBooksUseCaseHandler,
+    private val getBookUseCaseHandler: GetBookUseCaseHandler,
+    private val createBookHandlerHandler: CreateBookUseCaseHandler,
+    private val updateBookUseCaseHandler: UpdateBookUseCaseHandler,
+    private val deleteBookUseCaseHandler: DeleteBookUseCaseHandler
 ) {
     @GetMapping
     fun list(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
@@ -34,16 +34,15 @@ class BookController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun post(@RequestBody @Valid request: CreateBookRequest) {
+    fun post(@RequestBody @Valid request: CreateBookRequest): BookResponse {
         val useCase = CreateBookUseCase(request);
-        createBookHandlerHandler.handle(useCase);
+        return createBookHandlerHandler.handle(useCase);
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun put(@PathVariable id: Int, @RequestBody @Valid request: UpdateBookRequest){
+    fun put(@PathVariable id: Int, @RequestBody @Valid request: UpdateBookRequest): BookResponse {
         val useCase = UpdateBookUseCase(id, request);
-        updateBookUseCaseHandler.handle(useCase);
+        return updateBookUseCaseHandler.handle(useCase);
     }
 
     @DeleteMapping("/{id}")

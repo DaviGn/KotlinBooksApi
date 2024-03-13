@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service
 import org.springframework.data.domain.Pageable
 
 data class ListBooksUseCase(
-        val pagination: Pageable
+    val pagination: Pageable
 )
 
 @Service
 class ListBooksUseCaseHandler(
-        private val bookRepository: BookRepository
+    private val bookRepository: BookRepository
 ) {
     fun handle(data: ListBooksUseCase): Page<BookResponse> {
         val books = bookRepository.findAll(data.pagination);

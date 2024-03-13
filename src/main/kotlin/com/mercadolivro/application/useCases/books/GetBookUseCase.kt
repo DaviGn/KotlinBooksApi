@@ -7,12 +7,12 @@ import com.mercadolivro.domain.responses.BookResponse
 import org.springframework.stereotype.Service
 
 data class GetBookUseCase(
-        val id: Int
+    val id: Int
 )
 
 @Service
 class GetBookUseCaseHandler(
-        private val bookRepository: BookRepository
+    private val bookRepository: BookRepository
 ) {
     fun handle(data: GetBookUseCase): BookResponse {
         val book = bookRepository.findById(data.id);
