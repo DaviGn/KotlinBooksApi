@@ -7,6 +7,7 @@ import com.mercadolivro.domain.mappers.toResponse
 import com.mercadolivro.domain.requests.UpdateBookRequest
 import com.mercadolivro.domain.responses.BookResponse
 import com.mercadolivro.domain.responses.bases.IResponse
+import com.mercadolivro.domain.responses.bases.NotFoundResponse
 import com.mercadolivro.domain.responses.bases.OkObjectResponse
 import org.springframework.stereotype.Service
 
@@ -19,11 +20,11 @@ data class UpdateBookUseCase(
 class UpdateBookUseCaseHandler(
     private val bookRepository: BookRepository
 ) {
-    fun handle(data: UpdateBookUseCase): IResponse {
+    fun handle(data: UpdateBookUseCase): IResponse<BookResponse> {
         val originalBook = bookRepository.findById(data.id);
 
         if (originalBook.isEmpty)
-            throw NotFoundException("Book not found!");
+            return NotFoundResponse();
 
         val updatedBook = data.request.toBookModel(originalBook.get());
         bookRepository.save(updatedBook);

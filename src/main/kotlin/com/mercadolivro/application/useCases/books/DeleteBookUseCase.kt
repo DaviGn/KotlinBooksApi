@@ -13,7 +13,7 @@ data class DeleteBookUseCase(
 class DeleteBookUseCaseHandler(
     private val bookRepository: BookRepository
 ) {
-    fun handle(data: DeleteBookUseCase): IResponse {
+    fun handle(data: DeleteBookUseCase): IResponse<Unit> {
         bookRepository.deleteById(data.id)
         return NoContentResponse();
     }

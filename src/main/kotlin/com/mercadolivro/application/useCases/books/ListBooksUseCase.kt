@@ -17,7 +17,7 @@ data class ListBooksUseCase(
 class ListBooksUseCaseHandler(
     private val bookRepository: BookRepository
 ) {
-    fun handle(data: ListBooksUseCase): IResponse {
+    fun handle(data: ListBooksUseCase): IResponse<Page<BookResponse>> {
         val books = bookRepository.findAll(data.pagination);
         val booksResponse = books.map { it.toResponse() };
         return OkObjectResponse(booksResponse);

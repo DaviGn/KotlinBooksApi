@@ -2,21 +2,30 @@ package com.mercadolivro.domain.responses.bases
 
 import org.springframework.http.ResponseEntity
 
-open class OkResponse() : IResponse {
-    override fun getResponse(): ResponseEntity<Any> {
+open class OkResponse<T>() : IResponse<T> {
+    override fun getResponse(): ResponseEntity<T> {
         return ResponseEntity.ok().build();
     }
 }
 
-class OkObjectResponse(
-    private val result: Any
-) : OkResponse(), IResponse {
-    override fun getResponse(): ResponseEntity<Any> {
+class OkObjectResponse<T>(
+    private val result: T
+) : OkResponse<T>(), IResponse<T> {
+    override fun getResponse(): ResponseEntity<T> {
         return ResponseEntity.ok(result);
     }
 }
-class NoContentResponse() : IResponse{
-    override fun getResponse(): ResponseEntity<Any> {
+
+class CreatedResponse<T>(
+    private val result: T
+) : IResponse<T> {
+    override fun getResponse(): ResponseEntity<T> {
+        return ResponseEntity.status(201).body(result);
+    }
+}
+
+class NoContentResponse() : IResponse<Unit> {
+    override fun getResponse(): ResponseEntity<Unit> {
         return ResponseEntity.noContent().build();
     }
 }

@@ -8,7 +8,6 @@ import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -22,37 +21,37 @@ class BookController(
     private val deleteBookUseCaseHandler: DeleteBookUseCaseHandler
 ) {
     @GetMapping
-    fun list(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Any>  {
+    fun list(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Page<BookResponse>> {
         val useCase = ListBooksUseCase(pageable);
         val result = listBooksUseCaseHandler.handle(useCase);
         return result.getResponse()
     }
 
     @GetMapping("/{id}")
-    fun get(@PathVariable id: Int) : ResponseEntity<Any> {
+    fun get(@PathVariable id: Int): ResponseEntity<BookResponse> {
         val useCase = GetBookUseCase(id);
         val result = getBookUseCaseHandler.handle(useCase);
         return result.getResponse();
     }
 
     @PostMapping
-    fun post(@RequestBody @Valid request: CreateBookRequest): ResponseEntity<Any> {
+    fun post(@RequestBody @Valid request: CreateBookRequest): ResponseEntity<BookResponse> {
         val useCase = CreateBookUseCase(request);
         val result = createBookHandlerHandler.handle(useCase);
-        return  result.getResponse();
+        return result.getResponse();
     }
 
     @PutMapping("/{id}")
-    fun put(@PathVariable id: Int, @RequestBody @Valid request: UpdateBookRequest): ResponseEntity<Any> {
+    fun put(@PathVariable id: Int, @RequestBody @Valid request: UpdateBookRequest): ResponseEntity<BookResponse> {
         val useCase = UpdateBookUseCase(id, request);
-        val result =  updateBookUseCaseHandler.handle(useCase);
-        return  result.getResponse();
+        val result = updateBookUseCaseHandler.handle(useCase);
+        return result.getResponse();
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Int) : ResponseEntity<Any>{
+    fun delete(@PathVariable id: Int): ResponseEntity<Unit> {
         val useCase = DeleteBookUseCase(id);
-        val result =  deleteBookUseCaseHandler.handle(useCase);
-        return  result.getResponse();
+        val result = deleteBookUseCaseHandler.handle(useCase);
+        return result.getResponse();
     }
 }
