@@ -4,6 +4,8 @@ import com.mercadolivro.data.repository.BookRepository
 import com.mercadolivro.domain.exceptions.NotFoundException
 import com.mercadolivro.domain.mappers.toResponse
 import com.mercadolivro.domain.responses.BookResponse
+import com.mercadolivro.domain.responses.bases.IResponse
+import com.mercadolivro.domain.responses.bases.OkObjectResponse
 import org.springframework.stereotype.Service
 
 data class GetBookUseCase(
@@ -14,12 +16,13 @@ data class GetBookUseCase(
 class GetBookUseCaseHandler(
     private val bookRepository: BookRepository
 ) {
-    fun handle(data: GetBookUseCase): BookResponse {
+    fun handle(data: GetBookUseCase): IResponse {
         val book = bookRepository.findById(data.id);
 
         if (book.isEmpty)
             throw NotFoundException("Book not found!");
 
-        return book.get().toResponse();
+        val response = book.get().toResponse();
+        return OkObjectResponse(response);
     }
 }

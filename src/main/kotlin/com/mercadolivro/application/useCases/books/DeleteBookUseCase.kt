@@ -1,6 +1,8 @@
 package com.mercadolivro.application.useCases.books
 
 import com.mercadolivro.data.repository.BookRepository
+import com.mercadolivro.domain.responses.bases.IResponse
+import com.mercadolivro.domain.responses.bases.NoContentResponse
 import org.springframework.stereotype.Service
 
 data class DeleteBookUseCase(
@@ -11,7 +13,8 @@ data class DeleteBookUseCase(
 class DeleteBookUseCaseHandler(
     private val bookRepository: BookRepository
 ) {
-    fun handle(data: DeleteBookUseCase) {
+    fun handle(data: DeleteBookUseCase): IResponse {
         bookRepository.deleteById(data.id)
+        return NoContentResponse();
     }
 }
