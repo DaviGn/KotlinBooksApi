@@ -1,5 +1,6 @@
 package com.mercadolivro.domain.mappers
 
+import com.mercadolivro.application.kafka.events.book.BookEvent
 import com.mercadolivro.domain.requests.CreateBookRequest
 import com.mercadolivro.domain.requests.UpdateBookRequest
 import com.mercadolivro.domain.responses.BookResponse
@@ -19,6 +20,10 @@ fun UpdateBookRequest.toBookModel(previousValue: BookModel): BookModel {
             name = this.name ?: previousValue.name,
             price = this.price ?: previousValue.price
     )
+}
+
+fun BookModel.toEvent(): BookEvent {
+    return BookEvent(this.id!!, this.name, this.price)
 }
 
 fun BookModel.toResponse(): BookResponse {

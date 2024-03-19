@@ -9,3 +9,30 @@ spring:
     password: 123456
   jackson:
     default-property-inclusion: non_null
+  kafka:
+    properties:
+      schema:
+        registry:
+          url: http://0.0.0.0:8085
+    producer:
+      bootstrap-servers: localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    consumer:
+      enable-auto-commit: false
+      bootstrap-servers: localhost:29092
+      group-id: mercado-livro-consumer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        specific:
+          avro:
+            reader: true
+        spring:
+          deserializer:
+            key:
+              delegate:
+                class: org.apache.kafka.common.serialization.StringDeserializer
+            value:
+              delegate:
+                class: io.confluent.kafka.serializers.KafkaAvroDeserializer

@@ -1,0 +1,24 @@
+{
+  "namespace": "com.mercadolivro.application.kafka.events.book",
+  "type": "record",
+  "name": "BookEvent",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    }
+  ]
+}

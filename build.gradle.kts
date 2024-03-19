@@ -7,6 +7,7 @@ plugins {
 	kotlin("jvm") version kotlinVersion
 	kotlin("plugin.spring") version kotlinVersion
 	kotlin("plugin.jpa") version kotlinVersion
+	id("com.github.davidmc24.gradle.plugin.avro") version "1.5.0"
 }
 
 group = "com.example"
@@ -18,12 +19,19 @@ java {
 
 repositories {
 	mavenCentral()
+	maven {
+		url = uri("http://packages.confluent.io/maven")
+		isAllowInsecureProtocol = true
+	}
 }
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.kafka:spring-kafka")
+	implementation("org.apache.avro:avro:1.11.2")
+	implementation("io.confluent:kafka-avro-serializer:7.6.0")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
@@ -37,10 +45,37 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs += "-Xjsr305=strict"
-		jvmTarget = "17"
+//avro plugin config
+avro {
+	stringType.set("CharSequence")
+}
+
+//set avro folder as resource
+sourceSets {
+	main {
+		resources {
+			srcDirs ("src/main/avro")
+		}
+		java {
+			srcDirs("build/generated-main-avro-java")
+		}
+	}
+}
+
+tasks {
+	compileKotlin.configure {
+		dependsOn("generateAvroJava")
+	}
+
+	compileTestKotlin.configure {
+		dependsOn("generateTestAvroJava")
+	}
+
+	withType<KotlinCompile> {
+		kotlinOptions {
+			freeCompilerArgs += "-Xjsr305=strict"
+			jvmTarget = "17"
+		}
 	}
 }
 
