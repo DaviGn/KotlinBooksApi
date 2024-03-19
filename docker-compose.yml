@@ -3,6 +3,8 @@
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:5.1.2
+    networks:
+      - broker-kafka
     container_name: kafka-zookeeper
     restart: on-failure
     environment:
@@ -15,6 +17,8 @@ services:
 
   kafka:
     image: confluentinc/cp-enterprise-kafka:5.1.2
+    networks:
+      - broker-kafka
     container_name: kafka
     depends_on:
       - zookeeper
@@ -36,6 +40,8 @@ services:
 
   schemaregistry:
     image: confluentinc/cp-schema-registry:5.1.2
+    networks:
+      - broker-kafka
     container_name: kafka-schemaregistry
     restart: on-failure
     depends_on:
@@ -49,6 +55,9 @@ services:
 
   akhq:
     image: tchiotludo/akhq
+    container_name: akhq
+    networks:
+      - broker-kafka
     environment:
       AKHQ_CONFIGURATION: |
         akhq:
@@ -69,6 +78,10 @@ services:
     links:
       - kafka
       - schemaregistry
+
+networks:
+  broker-kafka:
+    driver: bridge
 
 volumes:
   zookeeper_data:
