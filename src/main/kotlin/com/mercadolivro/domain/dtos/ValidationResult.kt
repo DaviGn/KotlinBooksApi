@@ -1,4 +1,4 @@
-package com.mercadolivro.domain.utils
+package com.mercadolivro.domain.dtos
 
 import com.mercadolivro.domain.interfaces.ValidationStrategy
 import com.mercadolivro.domain.responses.FieldErrorResponse

@@ -28,18 +28,18 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-//	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 
-	implementation("org.springframework.boot:spring-boot-starter-webflux:3.3.0")
-	runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.1")
+//	implementation("org.springframework.boot:spring-boot-starter-webflux:3.3.0")
+//	runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.1")
 
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("org.apache.avro:avro:1.11.2")
 	implementation("io.confluent:kafka-avro-serializer:7.6.0")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("com.trendyol:kediatr-spring-starter:3.0.0")
-	implementation("com.github.mvallim:java-fluent-validator:1.10.0")
+//	implementation("com.trendyol:kediatr-spring-starter:3.0.0")
+//	implementation("com.github.mvallim:java-fluent-validator:1.10.0")
 	implementation("io.konform:konform:0.6.0")
 
 	implementation("io.springfox:springfox-swagger2:2.9.2")
