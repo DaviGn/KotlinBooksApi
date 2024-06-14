@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class DeleteBookCommandHandler(
     private val bookRepository: BookRepository
-) : CommandWithResultHandler<DeleteBookCommand, IResponse<Unit>> {
-    override suspend fun handle(command: DeleteBookCommand): IResponse<Unit> {
+) : CommandWithResultHandler<DeleteBookCommand, IResponse> {
+    override suspend fun handle(command: DeleteBookCommand): IResponse {
         bookRepository.deleteById(command.id)
         return NoContentResponse();
     }

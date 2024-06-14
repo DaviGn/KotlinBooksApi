@@ -5,4 +5,4 @@ import com.trendyol.kediatr.CommandWithResult
 
 data class DeleteBookCommand(
     val id: Int
-) : CommandWithResult<IResponse<Unit>>
+) : CommandWithResult<IResponse>

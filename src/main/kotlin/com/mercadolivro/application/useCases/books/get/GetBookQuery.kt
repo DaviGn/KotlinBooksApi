@@ -6,4 +6,4 @@ import com.trendyol.kediatr.Query
 
 data class GetBookQuery(
     val id: Int
-) : Query<IResponse<BookResponse>>
+) : Query<IResponse>

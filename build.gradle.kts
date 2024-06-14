@@ -40,6 +40,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("com.trendyol:kediatr-spring-starter:3.0.0")
 	implementation("com.github.mvallim:java-fluent-validator:1.10.0")
+	implementation("io.konform:konform:0.6.0")
 
 	implementation("io.springfox:springfox-swagger2:2.9.2")
 	implementation("io.springfox:springfox-swagger-ui:2.9.2")

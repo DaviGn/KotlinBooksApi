@@ -1,7 +1,7 @@
 package com.mercadolivro.domain.entities
 
-import java.math.BigDecimal
 import jakarta.persistence.*
+import java.math.BigDecimal
 
 @Entity(name = "Books")
 data class BookModel(
@@ -15,5 +15,4 @@ data class BookModel(
 
     @Column
     var price: BigDecimal
-
 )

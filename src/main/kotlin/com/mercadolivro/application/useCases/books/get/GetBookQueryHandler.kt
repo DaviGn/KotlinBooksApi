@@ -2,7 +2,6 @@ package com.mercadolivro.application.useCases.books.get
 
 import com.mercadolivro.data.repository.BookRepository
 import com.mercadolivro.domain.mappers.toResponse
-import com.mercadolivro.domain.responses.BookResponse
 import com.mercadolivro.domain.responses.bases.IResponse
 import com.mercadolivro.domain.responses.bases.NotFoundResponse
 import com.mercadolivro.domain.responses.bases.OkObjectResponse
@@ -12,8 +11,8 @@ import org.springframework.stereotype.Component
 @Component
 class GetBookQueryHandler(
     private val bookRepository: BookRepository
-) : QueryHandler<GetBookQuery, IResponse<BookResponse>> {
-    override suspend fun handle(query: GetBookQuery): IResponse<BookResponse> {
+) : QueryHandler<GetBookQuery, IResponse> {
+    override suspend fun handle(query: GetBookQuery): IResponse {
         val book = bookRepository.findById(query.id);
 
         if (book.isEmpty)

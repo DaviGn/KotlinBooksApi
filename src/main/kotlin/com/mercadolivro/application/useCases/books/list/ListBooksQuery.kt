@@ -8,4 +8,4 @@ import org.springframework.data.domain.Pageable
 
 data class ListBooksQuery(
     val pagination: Pageable
-) : Query<IResponse<Page<BookResponse>>>
+) : Query<IResponse>
