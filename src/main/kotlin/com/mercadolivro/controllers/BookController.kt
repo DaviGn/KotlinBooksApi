@@ -28,15 +28,15 @@ class BookController(
 ) {
     @GetMapping
     fun list(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Any> {
-        val useCase = ListBooksQuery(pageable);
-        val result = listBooksQueryUseCase.execute(useCase);
+        val query = ListBooksQuery(pageable);
+        val result = listBooksQueryUseCase.execute(query);
         return result.getResponse()
     }
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: Int): ResponseEntity<Any> {
-        val useCase = GetBookQuery(id);
-        val result = getBookQueryUseCase.execute(useCase);
+        val query = GetBookQuery(id);
+        val result = getBookQueryUseCase.execute(query);
         return result.getResponse();
     }
 
@@ -56,8 +56,8 @@ class BookController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Int): ResponseEntity<Any> {
-        val useCase = DeleteBookCommand(id);
-        val result = deleteBookCommandUseCase.execute(useCase);
+        val command = DeleteBookCommand(id);
+        val result = deleteBookCommandUseCase.execute(command);
         return result.getResponse();
     }
 }
