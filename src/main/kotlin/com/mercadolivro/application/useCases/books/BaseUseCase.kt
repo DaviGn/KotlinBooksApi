@@ -2,31 +2,58 @@ package com.mercadolivro.application.useCases.books
 
 import com.mercadolivro.domain.dtos.ValidationResult
 import com.mercadolivro.domain.interfaces.ValidationStrategy
-import com.mercadolivro.domain.responses.bases.BadRequestResponse
-import com.mercadolivro.domain.responses.bases.IResponse
+import com.mercadolivro.domain.responses.bases.*
 
-abstract class BaseUseCase<TRequest>(
+abstract class BaseUseCaseWithoutResponse<TRequest>(
+    validators: List<ValidationStrategy<TRequest>>
+) : BaseUseCase<TRequest, Unit>(validators)
+
+abstract class BaseUseCase<TRequest, TResponse>(
     private val validators: List<ValidationStrategy<TRequest>>
 ) {
-    protected fun runValidations(command: TRequest): ValidationResult {
-        val validationsResults = validators.map { it.validate(command) }.flatten()
-        val success = validationsResults.isEmpty()
-        return ValidationResult(success, validationsResults)
-    }
-
-    protected fun returnValidationErrors(validationResult: ValidationResult): IResponse {
-        return BadRequestResponse(validationResult.errors)
-    }
-
     fun execute(request: TRequest): IResponse {
         val validationResult = this.runValidations(request)
 
         if (validationResult.failed) {
-            return returnValidationErrors(validationResult)
+            return processValidationErrors(validationResult)
         }
 
         return handle(request);
     }
 
-    protected abstract fun handle(request: TRequest) : IResponse
+    protected abstract fun handle(request: TRequest): IResponse
+
+    private fun runValidations(request: TRequest): ValidationResult {
+        val validationsResults = validators.map { it.validate(request) }.flatten()
+        val success = validationsResults.isEmpty()
+        return ValidationResult(success, validationsResults)
+    }
+
+    private fun processValidationErrors(validationResult: ValidationResult): IResponse {
+        return BadRequestResponse(validationResult.errors)
+    }
+
+    protected fun ok(): IResponse {
+        return OkResponse()
+    }
+
+    protected fun ok(response: TResponse): IResponse {
+        return OkObjectResponse(response)
+    }
+
+    protected fun created(response: TResponse): IResponse {
+        return CreatedResponse(response)
+    }
+
+    protected fun noContent(): IResponse {
+        return NoContentResponse()
+    }
+
+    protected fun notFound(): IResponse {
+        return NotFoundResponse()
+    }
+
+    protected fun badRequest(response: Any): IResponse {
+        return badRequest(response)
+    }
 }
