@@ -1,6 +1,6 @@
 package com.mercadolivro.domain.dtos
 
-import com.mercadolivro.domain.interfaces.ValidationStrategy
+import com.mercadolivro.domain.interfaces.IValidationStrategy
 import com.mercadolivro.domain.responses.FieldErrorResponse
 
 data class ValidationResult(
@@ -10,7 +10,7 @@ data class ValidationResult(
     val failed = !success
 }
 
-fun <T> List<ValidationStrategy<T>>.validate(data: T): ValidationResult {
+fun <T> List<IValidationStrategy<T>>.validate(data: T): ValidationResult {
     val validationsResults = this.map { it -> it.validate(data) }.flatten()
     val success = validationsResults.isEmpty()
     return ValidationResult(success, validationsResults)

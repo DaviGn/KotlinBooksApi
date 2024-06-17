@@ -2,7 +2,7 @@ package com.mercadolivro.application.useCases.books.update
 
 import com.mercadolivro.application.useCases.books.BaseUseCase
 import com.mercadolivro.data.repository.BookRepository
-import com.mercadolivro.domain.interfaces.ValidationStrategy
+import com.mercadolivro.domain.interfaces.IValidationStrategy
 import com.mercadolivro.domain.mappers.toBookModel
 import com.mercadolivro.domain.mappers.toResponse
 import com.mercadolivro.domain.responses.BookResponse
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 @Component
 class UpdateBookCommandUseCase(
     private val bookRepository: BookRepository,
-    validators: List<ValidationStrategy<UpdateBookCommand>>
+    validators: List<IValidationStrategy<UpdateBookCommand>>
 ) : BaseUseCase<UpdateBookCommand, BookResponse>(validators) {
     override fun handle(request: UpdateBookCommand): IResponse {
         val originalBook = bookRepository.findById(request.id);

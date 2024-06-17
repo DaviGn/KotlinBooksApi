@@ -1,15 +1,15 @@
 package com.mercadolivro.application.useCases.books
 
 import com.mercadolivro.domain.dtos.ValidationResult
-import com.mercadolivro.domain.interfaces.ValidationStrategy
+import com.mercadolivro.domain.interfaces.IValidationStrategy
 import com.mercadolivro.domain.responses.bases.*
 
 abstract class BaseUseCaseWithoutResponse<TRequest>(
-    validators: List<ValidationStrategy<TRequest>>
+    validators: List<IValidationStrategy<TRequest>>
 ) : BaseUseCase<TRequest, Unit>(validators)
 
 abstract class BaseUseCase<TRequest, TResponse>(
-    private val validators: List<ValidationStrategy<TRequest>>
+    private val validators: List<IValidationStrategy<TRequest>>
 ) {
     fun execute(request: TRequest): IResponse {
         val validationResult = this.runValidations(request)
