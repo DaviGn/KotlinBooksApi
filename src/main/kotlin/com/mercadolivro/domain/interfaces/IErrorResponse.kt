@@ -1,5 +1,5 @@
 package com.mercadolivro.domain.interfaces
 
-interface IErrorResponse<T> {
-    fun getResponse() : T
+interface IErrorResponse {
+    fun getResponse(): Any
 }

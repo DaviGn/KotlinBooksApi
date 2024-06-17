@@ -1,11 +1,10 @@
 package com.mercadolivro.domain.dtos
 
 import com.mercadolivro.domain.interfaces.IValidationStrategy
-import com.mercadolivro.domain.responses.FieldErrorResponse
 
 data class ValidationResult(
     val success: Boolean,
-    val errors: List<FieldErrorResponse>?
+    val errors: List<Any>?
 ) {
     val failed = !success
 }

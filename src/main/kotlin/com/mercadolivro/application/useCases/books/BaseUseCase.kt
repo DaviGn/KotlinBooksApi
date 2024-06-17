@@ -24,9 +24,15 @@ abstract class BaseUseCase<TRequest, TResponse>(
     protected abstract fun handle(request: TRequest): IResponse
 
     private fun runValidations(request: TRequest): ValidationResult {
-        val validationsResults = validators.map { it.validate(request) }.flatten()
-        val success = validationsResults.isEmpty()
-        return ValidationResult(success, validationsResults)
+        for (validator in validators) {
+            val validationsResult = validator.validate(request)
+            val success = validationsResult.isEmpty()
+
+            if (!success)
+                return ValidationResult(false, validationsResult.map { it.getResponse() })
+        }
+
+        return ValidationResult(true, null)
     }
 
     private fun processValidationErrors(validationResult: ValidationResult): IResponse {
